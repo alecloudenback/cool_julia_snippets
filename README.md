@@ -35,3 +35,21 @@ Now we managed to avoid repeating all the boilerplate relating to the name, weig
 If you made a `Dog` and for whatever didn't want to call it's `CommonPetData` field data, and instead called it `petadata`, then you'd just write a method `data(d::Dog) = d.petdata`
 You may also find it desireable to define custom constructors and show methods for your subtypes of `Pet` so that the user just writes and sees `cat(name, weight, ... tail_length_cm) `
 "
+
+L. White on the same subject:
+
+```julia
+struct Cat <: Animal end
+struct Dog <: Animal end
+struct Pet{S<:Animal}
+    species::S
+    name::String
+end
+rex = Pet(Dog(), "Rexford Smith")
+fifi = Pet(Cat(), "Fiona Smith")
+# and some methods:
+food(p::Pet) = foo(p.species)
+food(::Cat) = "Fish"
+food(::Dog) = "Meat"
+food(::Pet{Dog}) = "Kibble"
+```
